@@ -8,6 +8,7 @@ Electricity bid price
   4. 若报价比p_r和p_d都低，既都中标，则优先选择预卖给第二天（选择日前）。
 
 我们可以定义一个收益函数来代表不同报价下的收益量。
+
 $$
 r_h(b) = (1-\beta)\,p_{r,h} + \beta\,p_{r,h}\,\mathbf{1}\{b \le p_{r,h}\} + (p_{d,h}-p_{r,h})\,\mathbf{1}\{b \le p_{d,h}\}
 $$
