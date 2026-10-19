@@ -10,5 +10,5 @@ Electricity bid price
 我们可以定义一个收益函数来代表不同报价下的收益量。
 
 $$
-r_h(b) = (1-\beta)\,p_{r,h} + \beta\,p_{r,h}\,\mathbf{1}\lbrace \le p_{r,h}\rbrace + (p_{d,h}-p_{r,h})\,\mathbf{1}\lbraceb \le p_{d,h}\rbrace
+r_h(b) = (1-\beta)\,p_{r,h} + \beta\,p_{r,h}\,\mathbf{1}\lbrace b\le p_{r,h}\rbrace + (p_{d,h}-p_{r,h})\,\mathbf{1}\lbrace b \le p_{d,h}\rbrace
 $$
