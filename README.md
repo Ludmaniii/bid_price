@@ -4,11 +4,11 @@ Electricity bid price
 在光伏电厂的竞价中有如如下的规则： 
   1. 电厂给出的报价，当日可以中标日前价格(p_d)，既预卖给第二天。
   2. 也可以中标实时价格(p_r)，既直接把发出的电力当下卖给今日。
-  3. 如果报价比市场中日前的和实时的价格均高，则不中标任何一个。但是已经发出来的电量需要消耗掉，既以一定比例的实时价格卖出。
+  3. 如果报价比市场中日前的和实时的价格均高，则不中标任何一个。但是已经发出来的电量需要消耗掉$\beta$的价格，既以$(1 - \beta)$的实时价格卖出。
   4. 若报价比p_r和p_d都低，既都中标，则优先选择预卖给第二天（选择日前）。
 
 我们可以定义一个收益函数来代表不同报价下的收益量。
 
 $$
-r_h(b) = (1-\beta)\ p_{r,h} + \beta\,p_{r,h}\,\mathbf{1}\lbrace b\le p_{r,h}\rbrace + (p_{d,h}-p_{r,h})\,\mathbf{1}\lbrace b \le p_{d,h}\rbrace
+r_h(b) = (1-\beta)\ p_{r,h} + \beta\ p_{r,h}\ \mathbf{1}\lbrace b\le p_{r,h}\rbrace + (p_{d,h}-p_{r,h})\ \mathbf{1}\lbrace b \le p_{d,h}\rbrace
 $$
