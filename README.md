@@ -18,4 +18,5 @@ $$
 $$
 R_h(b) = (1 - \alpha) p_{r, h} (1 - \beta) Q_h + L_r \beta p_{r, h} + L_d (p_{d, h} - p_{r, h})
 $$
+
 where L_d and L_r 是分别对应中标的量。
