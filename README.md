@@ -20,3 +20,12 @@ R_h(b) = (1 - \alpha) p_{r, h} (1 - \beta) Q_h + L_r \beta p_{r, h} + L_d (p_{d,
 $$
 
 where L_d and L_r 是分别对应中标的量。
+如何获得分别中标的量： 在原p-q平面中，我们可以通过求原式b(Q)的逆来获取对应价格下，会有多少出力中标。
+
+$$
+L_r = \min(\max(b^{-1}(p_{r, h}) - \alpha Q_{h}, 0), (1 - \alpha) Q_h)
+$$
+
+$$
+L_d = \min(\max(b^{-1}(p_{d, h}) - \alpha Q_{h}, 0), (1 - \alpha) Q_h)
+$$
