@@ -1,7 +1,5 @@
 # Exact offer-curve bidding for a solar plant
 
-[中文版推导](derivation.zh.md)
-
 A solar plant submits **one** price–quantity offer curve per day. That single curve is settled against both a day-ahead and a real-time price, in each of the 24 hours. Because revenue is a step function of the offer price, this problem is usually attacked by scanning a single price or by heuristic search (genetic algorithms, particle swarm).
 
 This repository shows that, when prices are known, the best curve can be found **exactly**:
