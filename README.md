@@ -1,10 +1,15 @@
 # Exact offer-curve bidding for a solar plant
 
-A solar plant submits **one** price–quantity offer curve per day. That single curve is settled against both a day-ahead and a real-time price, in each of the 24 hours. Because revenue is a step function of the offer price, this problem is usually attacked by scanning a single price or by heuristic search (genetic algorithms, particle swarm).
+**Problem.** A solar plant submits **one** non-decreasing price–quantity offer curve per day, and that same curve is settled against both a day-ahead and a real-time price in each of the 24 hours. Revenue is a step function of the offer, so the problem is usually attacked by scanning a single flat price or by heuristic search (genetic algorithms, particle swarm). Neither says how far its answer is from the best curve.
 
-This repository shows that, when prices are known, the best curve can be found **exactly**:
+**Method.** The curve affects revenue only through its inverse at the 48 hourly prices. The objective then splits into 48 one-variable terms, and the monotonicity requirement becomes a chain $q_1 \le q_2 \le \cdots \le q_{48}$. A dynamic programme solves this exactly; a counter on the number of jumps limits how many steps the curve may have.
 
-> The curve affects revenue only through its inverse at the 48 hourly prices. The objective then splits into 48 one-variable terms, and the monotonicity requirement becomes a chain $q_1 \le q_2 \le \cdots \le q_{48}$. A dynamic programme solves this exactly, and with a cap on the number of steps it also handles curves with only a few segments.
+**Results.** With prices known, the solver returns the best curve in hindsight, an upper bound for any bidding strategy.
+
+- **Exact, and checked.** It matches brute-force enumeration on 200 random cases, and on all seven days of CAISO data it matches exhaustive enumeration (up to $5.8 \times 10^8$ curves per day) and an integer-programming solver.
+- **What curve shape is worth.** Over one week of CAISO data the best curve earns 0.55% more than the best single price on the offer-dependent output (0–1.4% per day). Allowing one jump captures 73% of that gap, and the optimum never needs more than two.
+
+[The problem](#the-problem) · [Results](#results) · [Derivation](#derivation) · [Code](#code)
 
 ## The problem
 
@@ -43,6 +48,38 @@ For one unit of energy offered at $b$, this gives four outcomes:
 **Why it is hard.** Taken alone, each hour wants its offer in a particular price range. But one monotone curve must serve every hour, and each hour reads a different part of it: high-output hours read the right end, low-output hours the left end. Midday has the most solar output and often the lowest prices, so the hours pull the curve in opposite directions.
 
 **Parameters.** $\alpha$ and $\beta$ are modelled on publicly documented rules in Chinese provincial spot markets. For example, Guangdong settles 90% of a renewable plant's output outside the offer ($\alpha = 0.9$), and Shandong recovers deviation revenue at 5% of the real-time price ($\beta = 0.05$). The derivation holds for any $\alpha$ and $\beta$; setting both to 0 removes these rules.
+
+## Results
+
+**Data.** One week of CAISO data (1–7 June 2025, SP15 hub), $\alpha = 0.9$, $\beta = 0.05$, a 6 MW plant. Prices are treated as known, so every number below is a hindsight benchmark.
+
+**The solver is exact.** `check_dp.py` compares the dynamic programme with independent methods; its output is in [`results/check_dp.txt`](results/check_dp.txt).
+
+- **200 random small cases.** Every monotone sequence is listed and the best one is compared with the DP, with no jump limit and with at most 0, 1 and 2 jumps. Random cases reach every branch of the DP; real days do not, because their optimal curves use few, large jumps.
+- **Each CAISO day.** For at most 0, 1, 2 and 3 jumps, the DP matches exhaustive enumeration of every curve with that many jumps (up to $5.8 \times 10^8$ per day). With no limit there are $10^{15}$ or more curves, too many to list, and the DP matches an integer-programming solver (HiGHS) instead.
+
+All checks pass.
+
+**What curve shape is worth.** Revenue in dollars on the offer-dependent window $[\alpha Q_h, Q_h]$; the share $\alpha$ that clears unconditionally earns the same under every offer and is left out. Produced by `results.py` and saved in [`results/summary.csv`](results/summary.csv).
+
+| Day | Single price | At most 1 jump | Unrestricted | Jumps used | Gain over single price |
+|---|---:|---:|---:|---:|---:|
+| 2025-06-01 | 178.64 | 181.18 | 181.18 | 1 | 2.54 (1.42%) |
+| 2025-06-02 | 111.70 | 111.70 | 111.70 | 1 | 0.00 (0.00%) |
+| 2025-06-03 | 134.47 | 134.47 | 134.83 | 2 | 0.37 (0.27%) |
+| 2025-06-04 | 80.90 | 80.96 | 81.24 | 2 | 0.34 (0.42%) |
+| 2025-06-05 | 129.32 | 129.42 | 129.42 | 1 | 0.10 (0.07%) |
+| 2025-06-06 | 129.60 | 130.24 | 130.78 | 2 | 1.18 (0.91%) |
+| 2025-06-07 | 59.30 | 59.30 | 59.31 | 2 | 0.01 (0.01%) |
+| **Week** | **823.93** | **827.25** | **828.45** | | **4.52 (0.55%)** |
+
+- The best curve beats the best single price on six of the seven days.
+- Allowing one jump captures 73% of the week's gap, and the optimum never uses more than two jumps.
+- With prices known, a well-chosen flat price is already within about half a percent of the best curve on this week. How close a bid can get when prices must be forecast is the open question (see [Next steps](#next-steps)). This is one summer week at one hub; other seasons and markets may differ.
+
+![result](figures/fig4_result.png)
+
+*2025-06-01, the day with the largest gain. The best curve offers the first 5.2 MW at prices up to 20.5 USD/MWh and the last 0.8 MW at about 26.3 USD/MWh; the best flat offer is 31.9 USD/MWh.*
 
 ## Derivation
 
@@ -287,7 +324,7 @@ for k in range(K - 1, 0, -1):
 path.reverse()
 ```
 
-The DP was checked against brute-force enumeration of all monotone sequences on 200 random cases, and the full pipeline against a direct revenue calculation on simulated days.
+`check_dp.py` checks this implementation against brute-force enumeration and an integer-programming solver; see [Results](#results).
 
 ## Code
 
@@ -295,20 +332,24 @@ The DP was checked against brute-force enumeration of all monotone sequences on 
 |---|---|
 | `fetch.py` | Downloads day-ahead and real-time prices and solar output from CAISO (SP15 hub) with `gridstatus`, and saves 24 hourly rows per day to `caiso_sp15.csv` |
 | `build.py` | `build_points` builds the 48 points and the matrix $f$; `solve` is the dynamic programme; `single_price` finds the best flat offer |
-| `plot.py` | Plots one day in the $p$–$q$ plane: unrestricted, at most $S$ jumps, and single price |
-| `make_figures.py` | Regenerates the figures in this README |
+| `plot.py` | Plots one day in the $p$–$q$ plane: unrestricted, at most $S$ jumps, and single price (the figure in Results is its output for 2025-06-01) |
+| `results.py` | Solves every day under the three offer formats and writes `results/summary.csv` |
+| `check_dp.py` | Checks the DP against brute-force enumeration and an integer-programming solver |
+| `make_figures.py` | Regenerates the figures in the derivation |
 
 ```bash
-pip install -r requirements.txt
-python fetch.py    # download data
-python build.py    # solve one day
-python plot.py     # compare the three offers
+pip install numpy pandas scipy matplotlib gridstatus
+python fetch.py      # download data
+python build.py      # solve one day
+python plot.py       # compare the three offers on one day
+python results.py    # summarise every day
+python check_dp.py   # verify the DP
 ```
 
 CAISO is used because it has both a day-ahead and a real-time market and a large share of solar. Solar output is the system total, rescaled to a 6 MW plant so that only its daily shape is kept.
 
 ## Next steps
 
-- Run a month of CAISO data and compare unrestricted, at most one jump, and single price.
+- Extend the comparison from one week to a full year, and to other markets.
 - Handle the segment limit exactly, allowing sloped segments.
 - Bid with unknown prices: maximise expected revenue using a price forecast, with the hindsight optimum here as the benchmark.
