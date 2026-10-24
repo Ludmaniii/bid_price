@@ -1,0 +1,59 @@
+random cases: 200 matrices x 4 caps, 0 mismatches
+
+2025-06-01: 28 points, 28 candidate values
+  at most 0 jump(s): DP     8.1632   enumeration     8.1632   (28 curves)   ok
+  at most 1 jump(s): DP    12.1273   enumeration    12.1273   (10,234 curves)   ok
+  at most 2 jump(s): DP    12.1273   enumeration    12.1273   (1,160,110 curves)   ok
+  at most 3 jump(s): DP    12.1273   enumeration    12.1273   (61,049,485 curves)   ok
+  unrestricted:       DP    12.1273   integer prog    12.1273   (DP path uses 1 jumps)   ok
+  single price 9.5889 <= at most 1 jump 12.1273 <= unrestricted 12.1273   ok   [1s]
+
+2025-06-02: 28 points, 28 candidate values
+  at most 0 jump(s): DP     0.9682   enumeration     0.9682   (28 curves)   ok
+  at most 1 jump(s): DP     2.8003   enumeration     2.8003   (10,234 curves)   ok
+  at most 2 jump(s): DP     2.8003   enumeration     2.8003   (1,160,110 curves)   ok
+  at most 3 jump(s): DP     2.8003   enumeration     2.8003   (61,049,485 curves)   ok
+  unrestricted:       DP     2.8003   integer prog     2.8003   (DP path uses 1 jumps)   ok
+  single price 2.8003 <= at most 1 jump 2.8003 <= unrestricted 2.8003   ok   [1s]
+
+2025-06-03: 28 points, 28 candidate values
+  at most 0 jump(s): DP     2.7911   enumeration     2.7911   (28 curves)   ok
+  at most 1 jump(s): DP     4.8677   enumeration     4.8677   (10,234 curves)   ok
+  at most 2 jump(s): DP     5.2330   enumeration     5.2330   (1,160,110 curves)   ok
+  at most 3 jump(s): DP     5.2330   enumeration     5.2330   (61,049,485 curves)   ok
+  unrestricted:       DP     5.2330   integer prog     5.2330   (DP path uses 2 jumps)   ok
+  single price 4.8677 <= at most 1 jump 4.8677 <= unrestricted 5.2330   ok   [1s]
+
+2025-06-04: 30 points, 30 candidate values
+  at most 0 jump(s): DP     6.2692   enumeration     6.2692   (30 curves)   ok
+  at most 1 jump(s): DP     9.0093   enumeration     9.0093   (12,645 curves)   ok
+  at most 2 jump(s): DP     9.2968   enumeration     9.2968   (1,661,005 curves)   ok
+  at most 3 jump(s): DP     9.2968   enumeration     9.2968   (101,798,875 curves)   ok
+  unrestricted:       DP     9.2968   integer prog     9.2968   (DP path uses 2 jumps)   ok
+  single price 8.9568 <= at most 1 jump 9.0093 <= unrestricted 9.2968   ok   [1s]
+
+2025-06-05: 30 points, 30 candidate values
+  at most 0 jump(s): DP    19.0269   enumeration    19.0269   (30 curves)   ok
+  at most 1 jump(s): DP    19.1225   enumeration    19.1225   (12,645 curves)   ok
+  at most 2 jump(s): DP    19.1225   enumeration    19.1225   (1,661,005 curves)   ok
+  at most 3 jump(s): DP    19.1225   enumeration    19.1225   (101,798,875 curves)   ok
+  unrestricted:       DP    19.1225   integer prog    19.1225   (DP path uses 1 jumps)   ok
+  single price 19.0269 <= at most 1 jump 19.1225 <= unrestricted 19.1225   ok   [1s]
+
+2025-06-06: 34 points, 36 candidate values
+  at most 0 jump(s): DP    20.0597   enumeration    20.0597   (36 curves)   ok
+  at most 1 jump(s): DP    22.1543   enumeration    22.1543   (20,826 curves)   ok
+  at most 2 jump(s): DP    22.6931   enumeration    22.6931   (3,790,746 curves)   ok
+  at most 3 jump(s): DP    22.6931   enumeration    22.6931   (325,176,426 curves)   ok
+  unrestricted:       DP    22.6931   integer prog    22.6931   (DP path uses 2 jumps)   ok
+  single price 21.5170 <= at most 1 jump 22.1543 <= unrestricted 22.6931   ok   [5s]
+
+2025-06-07: 38 points, 38 candidate values
+  at most 0 jump(s): DP    44.8408   enumeration    44.8408   (38 curves)   ok
+  at most 1 jump(s): DP    45.7341   enumeration    45.7341   (26,049 curves)   ok
+  at most 2 jump(s): DP    45.7424   enumeration    45.7424   (5,644,425 curves)   ok
+  at most 3 jump(s): DP    45.7424   enumeration    45.7424   (579,186,975 curves)   ok
+  unrestricted:       DP    45.7424   integer prog    45.7424   (DP path uses 2 jumps)   ok
+  single price 45.7341 <= at most 1 jump 45.7341 <= unrestricted 45.7424   ok   [8s]
+
+all checks passed (200 random cases, 7 days)

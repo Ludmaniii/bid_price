@@ -18,7 +18,7 @@
 
 ## 1. 问题长什么样
 
-![setup](figures/fig1_setup.png)
+![setup](figures/fig1_setup_zh.png)
 
 - (a) 每个小时有两个价格，大小关系逐小时变化。
 - (b) 只看一个小时、一小份电，收益对报价 $b$ 是三级阶梯，转折点在 $p_d$ 和 $p_r$。
@@ -76,7 +76,7 @@ $$
 L_h(p) = \min\Big(\max\big(b^{-1}(p) - \alpha Q_h,\ 0\big),\ (1-\alpha)Q_h\Big)
 $$
 
-![window](figures/fig2_window.png)
+![window](figures/fig2_window_zh.png)
 
 上半部分是截断的三种情况。下半部分把窗口按结算方式切开：$p_d \lt p_r$ 时切成"都中、只中实时、都不中"三段，$p_d \gt p_r$ 时切成"都中、只中日前、都不中"三段。两种情况不需要分开写，下面这个式子自动处理：
 
@@ -216,7 +216,7 @@ $$
 
 最大值是 7，比不限跳变少 2。$V_3(3,1)$ 的两个来源打平，所以有两个最优解：
 
-![dp paths](figures/fig3_dp_paths.png)
+![dp paths](figures/fig3_dp_paths_zh.png)
 
 两条路径的区别只在于那一次跳变放在点 2 之前还是之后，点 2 都落不到它想要的 2。三个偏好里点 2 的价值最小，只能跳一次时被牺牲的就是它。
 
