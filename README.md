@@ -7,7 +7,7 @@
 **Results.** With prices known, the solver returns the best curve in hindsight, an upper bound for any bidding strategy.
 
 - **Exact, and checked.** It matches brute-force enumeration on 200 random cases, and on all seven days of CAISO data it matches exhaustive enumeration (up to $5.8 \times 10^8$ curves per day) and an integer-programming solver.
-- **What curve shape is worth.** Over one week of CAISO data the best curve earns 0.55% more than the best single price on the offer-dependent output (0–1.4% per day). Allowing one jump captures 73% of that gap, and the optimum never needs more than two.
+- **What curve shape is worth.** Over one week of CAISO data the best curve earns 0.55% more than the best single price on the offer-dependent output (0–1.4% per day), about 0.06% of the plant's total revenue. Allowing one jump captures 73% of that gap, and the optimum never needs more than two.
 
 [The problem](#the-problem) · [Results](#results) · [Derivation](#derivation) · [Code](#code)
 
@@ -75,6 +75,7 @@ All checks pass.
 
 - The best curve beats the best single price on six of the seven days.
 - Allowing one jump captures 73% of the week's gap, and the optimum never uses more than two jumps.
+- Measured against the plant's total revenue (all output valued at the real-time price), the week's gain is about 0.06%.
 - With prices known, a well-chosen flat price is already within about half a percent of the best curve on this week. How close a bid can get when prices must be forecast is the open question (see [Next steps](#next-steps)). This is one summer week at one hub; other seasons and markets may differ.
 
 ![result](figures/fig4_result.png)
